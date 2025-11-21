@@ -25,16 +25,6 @@ app.use('/actors', actorRoutes);
 app.use('/directors', directorRoutes);
 app.use('/movies', movieRoutes);
 
-// Endpoint temporal para sincronizar base de datos
-app.get('/sync-database', async (req, res) => {
-  try {
-    await sequelize.sync({ force: false });
-    res.json({ message: 'Tablas sincronizadas correctamente' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 // Iniciar servidor y conectar a la base de datos
 sequelize
 	.authenticate()
