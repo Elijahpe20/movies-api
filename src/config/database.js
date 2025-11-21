@@ -1,27 +1,34 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = process.env.DATABASE_URL
-	? new Sequelize(process.env.DATABASE_URL, {
+let sequelize;
+
+if (process.env.DATABASE_URL) {
+	// Producción - uso de DATABASE_URL directamente
+	sequelize = new Sequelize(process.env.DATABASE_URL, {
+		dialect: 'postgres',
+		protocol: 'postgres',
+		dialectOptions: {
+			ssl: {
+				require: true,
+				rejectUnauthorized: false,
+			},
+		},
+		logging: false,
+	});
+} else {
+	// Desarrollo - uso de variables separadas
+	sequelize = new Sequelize(
+		process.env.DB_NAME,
+		process.env.DB_USER,
+		process.env.DB_PASSWORD,
+		{
+			host: process.env.DB_HOST,
 			dialect: 'postgres',
-			dialectOptions: {
-				ssl: {
-					require: true,
-					rejectUnauthorized: false,
-				},
-			},
+			port: process.env.DB_PORT,
 			logging: false,
-	  })
-	: new Sequelize(
-			process.env.DB_NAME,
-			process.env.DB_USER,
-			process.env.DB_PASSWORD,
-			{
-				host: process.env.DB_HOST,
-				dialect: 'postgres',
-				port: process.env.DB_PORT,
-				logging: false,
-			},
-	  );
+		},
+	);
+}
 
 module.exports = sequelize;
