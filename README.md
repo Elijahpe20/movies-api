@@ -2,11 +2,11 @@
 
 API REST para gestionar películas, actores, directores y géneros.
 
-## 🚀 URL de la API
+## URL de la API
 
 **Producción:** https://movies-api-rkct.onrender.com
 
-## 📋 Endpoints
+## Endpoints
 
 ### Géneros
 
