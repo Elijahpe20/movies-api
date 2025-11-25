@@ -37,3 +37,5 @@ sequelize
 	.catch((err) => {
 		console.error('❌ Error al conectar a la base de datos:', err);
 	});
+
+module.exports = app;
